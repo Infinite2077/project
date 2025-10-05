@@ -5,15 +5,18 @@
     <%- include("header.ejs") -%>
     <main>
         <div class="wrapper">
-            <% products.forEach((products)=> {-%>
-                <div class="ads">
+            <% products.forEach((product)=> {-%>
+                <a class="ads" href="/post/<%= product.id %>">
                     <h3>
-                        <%= products.title %>
+                        <%= product.title %>
                     </h3>
                     <p>
-                        <%= products.desc %>
+                        <%= product.desc %>
                     </p>
-                </div>
+                    <p>
+                        <img src="/uploads/<%= product.image[0]%>">
+                    </p>
+                </a>
                <% }) -%> 
         </div>
         <%- include("modal.ejs") -%>
