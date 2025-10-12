@@ -56,6 +56,15 @@ select {
   font: inherit;
 }
 
+header {
+  background: #0085ff;
+  color: #FFFFFF;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 5px 5px rgba(0, 133, 255, 0.5);
+}
+
 body {
   background-color: #1E1E1E;
   font-family: serif;
@@ -131,10 +140,49 @@ form .image-label {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: 16px;
+  margin-inline: auto;
+}
+@media (max-width: 768px) {
+  .wrapper {
+    padding-inline: 8px;
+  }
+}
+@media (max-width: 480px) {
+  .wrapper {
+    padding-inline: 4px;
+  }
 }
 
 .ads img {
   width: 100%;
+}
+
+.ads {
+  width: 100%;
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .ads {
+    padding-inline: 16px;
+    margin-inline: auto;
+  }
+}
+@media (max-width: 768px) {
+  .ads {
+    padding-inline: 8px;
+  }
+}
+@media (max-width: 480px) {
+  .ads {
+    padding-inline: 4px;
+  }
+}
+.ads {
+  box-shadow: 0 5px 5px rgba(0, 133, 255, 0.5);
+  text-decoration: none;
+  color: inherit;
 }
 
 /*# sourceMappingURL=style.css.map */
