@@ -1,6 +1,30 @@
 let express = require("express")
 const multer = require("multer")
 const path = require("path")
+const mysql = require("mysql2")
+let db = require("./db")
+
+require("dotenv").config()
+
+let con = mysql.createConnection({
+    host: process.env.HOST_URL,
+    port: process.env.PORT,
+    user: process.env.DB_USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE_NAME
+})
+
+
+let a = con.connect(async(err)=>{
+    if (err){
+        console.error(err.stack)
+        return
+    }
+    console.log("SQL connected!")
+})
+
+
+
 let app = express()
 
 app.use("/uploads", express.static (path.join(__dirname, "uploads")))
@@ -18,7 +42,7 @@ const storage = multer.diskStorage({
 const upload = multer ({storage})
 
 
-let ads = []
+
 
 
 app.use(express.static("static"))
@@ -28,7 +52,13 @@ app.set("view engine", "ejs")
 app.set("views", "views")
 
 app.get("/", (req,res)=>{
-    res.render("index", {products: ads})
+    db.query("SELECT * FROM products", (err, rows)=>{
+        let products = rows
+        products.forEach(product=>{
+            product.image = JSON.parse(product.image)
+        })
+        res.render("index", {products})
+    })
 })
 
 app.get("/post/:id", (req,res)=>{
@@ -42,10 +72,15 @@ app.get("/post/:id", (req,res)=>{
 
 app.post("/add", upload.fields([{name: "image"}]), (req, res)=>{
     let data = req.body
+    console.log(data)
     data.image = req.files.image.map((file)=>file.filename)
-    data.id = ads.length
-    ads.push(data)
-    res.send({status: "ok"})
+    data.image = JSON.stringify(data.image)
+
+    db.query("INSERT INTO products SET ?", data, (err)=>{
+        res.status(201)
+        res.send({status: "ok"})
+    })
+
 })
 
 app.use ((req, res, next)=>{
