@@ -4,6 +4,8 @@ const path = require("path")
 const mysql = require("mysql2")
 let db = require("./db")
 
+
+
 require("dotenv").config()
 
 let con = mysql.createConnection({
@@ -71,7 +73,10 @@ app.get("/post/:id", (req,res)=>{
         let product = result[0]
         console.log(result)
         product.image = JSON.parse(product.image)
-        res.status(200).render("post", {product})
+        let comments = result.map(p=>{
+            return {id: p.commentId, author: p.author, text: p.comment}
+        })
+        res.status(200).render("post", {product, comments})
     }) 
 })
 

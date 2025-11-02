@@ -1,0 +1,15 @@
+@use "../base/mixins" as m;
+
+
+.ads{
+    padding: 1rem;
+    border-radius: 0.5rem;
+    @include m.transparentShadow();
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+
+

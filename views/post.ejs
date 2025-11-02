@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("head.ejs") -%>
-<body>
+<body id="post">
     <%- include("header.ejs") -%>
     <main>
         <h1>
@@ -12,11 +12,33 @@
         </p>
         <div class="imgs">
             <% product.image.forEach((image) => { -%>
-                <img src="/uploads/<%= image %>">
+                <img class="a" src="/uploads/<%= image %>">
             <% }) -%>
         </div>
     </main>
     <%- include("comments.ejs") -%>
+    <div class="commentList">
+        <h2>Comments</h2>
+        <% if (comments [0].id == null){ -%>
+            <p> No comments yet</p>
+
+        <% }else{ -%>
+
+        
+        <ul>
+            <% comments.forEach((c)=> { -%>
+                <li>
+                    <h3>
+                        Author <%= c.author %>
+                    </h3>
+                        <p>
+                            <%= c.text %>
+                        </p>
+                    </li>
+             <%  }) -%>
+        </ul>
+       <%  } -%> 
+    </div>
     <%- include("footer.ejs") -%>
 </body>
 </html>
